@@ -7,7 +7,7 @@ A little tool for source engine maps. Original idea by @VanderAGSN.
 * Counts how many times each prop was used (in the produced .vmf they are placed in descending order)
 
 # How to use it?
-In both cases you must place template.txt next to executable file. This txt is used to specify basic map information. You can modify it for own needs. The one thing you should type "entities" in place you want to place entities.
+In both cases you must place template.txt next to executable file. This txt is used to specify basic map information. You can modify it for own needs. The one thing you should type "entities" in place you want to place entities. Basic template file already included with the program executable
 
 ### Way 1
 Just drag your map's .vmf file to program's executable. Follow instructions on the screen. Your zoo file will be named "<input_file_name>_zoo.vmf".
