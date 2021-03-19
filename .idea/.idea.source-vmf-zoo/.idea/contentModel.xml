@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\maksi\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\maksi\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_source-vmf-zoo.-1171217546.00" t="ExcludeRecursive" />
+    <e p="C:\Users\maksi\AppData\Roaming\JetBrains\Rider2020.3\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\maksi\AppData\Roaming\JetBrains\Rider2020.3\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\maksi\Desktop\Projects\source-vmf-zoo" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="source-vmf-zoo" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="source-vmf-zoo.csproj" t="IncludeRecursive" />
+        <e p="Util" t="Include">
+          <e p="AutoOffset.cs" t="Include" />
+          <e p="Usage.cs" t="Include" />
+          <e p="Vector3.cs" t="Include" />
+        </e>
+        <e p="Vmf" t="Include">
+          <e p="VmfModel.cs" t="Include" />
+          <e p="VmfParser.cs" t="Include" />
+          <e p="VmfZoo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="source-vmf-zoo.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
