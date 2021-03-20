@@ -70,7 +70,7 @@ namespace SourceVmfZoo.Util
                             decreased = true;
                         }
 
-                        if (decreased)
+                        if (!decreased)
                             break;
                     }
 
