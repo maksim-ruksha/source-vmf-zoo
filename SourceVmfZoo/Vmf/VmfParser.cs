@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
+using SourceVmfZoo.Log;
 using SourceVmfZoo.Util;
 
 namespace SourceVmfZoo.Vmf
@@ -12,10 +12,13 @@ namespace SourceVmfZoo.Vmf
     {
         public static IEnumerable<VmfModel> Parse(string filePath, out List<string> corruptedModels)
         {
-            string file = ReadFile(filePath);
+            LogManager.Log($"VmfParser: reading {filePath}...");
+            string file = File.ReadAllText(filePath);
+            LogManager.Log("VmfParser: parsing...");
             IEnumerable<VmfModel> models = FindModels(file, out corruptedModels);
-
-            return models;
+            VmfModel[] vmfModels = models as VmfModel[] ?? models.ToArray();
+            LogManager.Log($"VmfParser: found {vmfModels.Length} normal models and {corruptedModels.Count} corrupted ones");
+            return vmfModels;
         }
 
         public static IEnumerable<Usage> GetUsages(IEnumerable<VmfModel> models)
@@ -79,19 +82,6 @@ namespace SourceVmfZoo.Vmf
             }
 
             return models;
-        }
-
-        private static string ReadFile(string filePath)
-        {
-            StreamReader reader = new StreamReader(filePath);
-            StringBuilder stringBuilder = new StringBuilder();
-            while (!reader.EndOfStream)
-            {
-                string line = reader.ReadLine();
-                stringBuilder.Append(line + "\n");
-            }
-
-            return stringBuilder.ToString();
         }
     }
 }

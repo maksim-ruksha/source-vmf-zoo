@@ -10,7 +10,7 @@ namespace SourceVmfZoo.Util
         public float Width { get; }
         public float Height { get; }
 
-        private struct DividerInfo
+        private readonly struct DividerInfo
         {
             public readonly float Weight;
             public readonly int Index1;
@@ -33,9 +33,7 @@ namespace SourceVmfZoo.Util
 
         private static float[] GetOptimalDimensions(int propsCount)
         {
-            // invert values
-
-
+            
             int dividablePropsCount = propsCount;
             while (IsPrime(dividablePropsCount))
             {

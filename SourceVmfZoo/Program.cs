@@ -153,10 +153,5 @@ namespace SourceVmfZoo
 
             return value;
         }
-
-        private static double ReadConfig(string key)
-        {
-            return double.Parse(ConfigurationManager.AppSettings[key]);
-        }
     }
 }
