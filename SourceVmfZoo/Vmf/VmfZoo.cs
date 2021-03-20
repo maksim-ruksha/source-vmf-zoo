@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SourceVmfZoo.Log;
 using SourceVmfZoo.Util;
 
 namespace SourceVmfZoo.Vmf
@@ -27,7 +28,10 @@ namespace SourceVmfZoo.Vmf
         public string GetPlacedModels()
         {
             if (!CanFitModels())
+            {
+                LogManager.Log("VmfZoo: Can not fit models with specified offsets");
                 throw new Exception($"Can't fit models with current offsets! {_inLineOffset} {_betweenLineOffset}");
+            }
 
             List<VmfModel> list = _vmfModels.ToList();
             StringBuilder stringBuilder = new StringBuilder();
@@ -35,36 +39,43 @@ namespace SourceVmfZoo.Vmf
             // in Source Z axis is up, so Y and Z are swapped
             Vector3 position = new Vector3(MinMapDimensionValue, MinMapDimensionValue, 0);
             int index = 0;
-            //Console.WriteLine($"Offsets: inLine: {_inLineOffset} betweenLine: {_betweenLineOffset}");
+            bool passedHalfY = false;
+            bool passedHalfX = false;
+            LogManager.Log("VmfZoo: Placing models");
             for (position.Y = MinMapDimensionValue; position.Y <= MaxMapDimensionValue; position.Y += _betweenLineOffset)
             {
+                if (!passedHalfY && position.Y > 0)
+                    passedHalfY = true;
                 for (position.X = MinMapDimensionValue; position.X <= MaxMapDimensionValue; position.X += _inLineOffset)
                 {
-                    //Console.WriteLine(position);
+                    if (!passedHalfX && position.X > 0)
+                        passedHalfX = true;
                     if (index >= list.Count)
+                    {
+                        if(!passedHalfX)
+                            LogManager.Log("VmfZoo: Warning! Did not passed half of X axis (pretty normal for user offset)!");
+                        if(!passedHalfY)
+                            LogManager.Log("VmfZoo: Warning! Did not passed half of Y axis (pretty normal for user offset)!");
                         return stringBuilder.ToString();
+                    }
 
+                    LogManager.Log($"VmfZoo: Prop #{index} {position.X} {position.Y} {position.Z}");
                     VmfModel model = list[index];
+                    stringBuilder.Append(model.ToStringWithOriginAndNumber(position, index));
                     index++;
-                    stringBuilder.Append(model.ToStringWithOrigin(position));
+                    
                 }
             }
 
             // wtf
+            LogManager.Log($"VmfZoo: Warning! Prop placing loops ended by themselves");
             Console.WriteLine(
-                "Something strange happened: writing cycles ended not by \"return\" condition. Result might be corrupted or not full.");
+                "Something strange happened: writing loops ended by themselves, not by \"return\" condition. Result might be corrupted or not full.");
             return stringBuilder.ToString();
         }
 
-        public static bool CanFitModels(int propsCount, float inLineOffset, float betweenLineOffset)
-        {
-            int modelsPerLine = (int) Math.Floor(MapSize / inLineOffset);
-            int lineCount = (int) Math.Floor(MapSize / betweenLineOffset);
-            int canFitCount = lineCount * modelsPerLine;
-            Console.WriteLine($"Can fit count {canFitCount}");
-            return canFitCount >= propsCount;
-        }
-        public bool CanFitModels()
+
+        private bool CanFitModels()
         {
             int modelsPerLine = (int) Math.Floor(MapSize / _inLineOffset + 1);
             int lineCount = (int) Math.Floor(MapSize / _betweenLineOffset);

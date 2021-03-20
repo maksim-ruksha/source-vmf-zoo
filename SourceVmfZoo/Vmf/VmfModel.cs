@@ -33,27 +33,15 @@ namespace SourceVmfZoo.Vmf
 
         public string ToStringWithOrigin(Vector3 origin)
         {
-            /*string originString = "\"origin\"";
-            int originIndex = FullContent.IndexOf(originString, StringComparison.Ordinal);
             
-            // +1 for space
-            int originValueStartIndex = originIndex + originString.Length + 1;
-            int originValueEndIndex = FullContent.IndexOf("\n", originValueStartIndex, StringComparison.Ordinal);
-            
-            // also must reset
-            string anglesString = "\"angles\"";
-            int anglesIndex = FullContent.IndexOf(anglesString, StringComparison.Ordinal);
+            ReplaceParameter("origin", origin.ToString());
+            ReplaceParameter("angles", Vector3.Zero.ToString());
 
-            int anglesValueStartIndex = anglesIndex + anglesString.Length + 1;
-            int anglesValueEndIndex = FullContent.IndexOf("\n", anglesValueStartIndex, StringComparison.Ordinal);
-
-            string newContent =
-                // replace position
-                FullContent.Remove(originValueStartIndex, originValueEndIndex - originValueStartIndex)
-                    .Insert(originValueStartIndex, origin.ToString())
-                    // reset angles
-                    .Remove(anglesValueStartIndex, anglesValueEndIndex - anglesValueStartIndex)
-                    .Insert(anglesValueStartIndex, Vector3.Zero.ToString());*/
+            return FullContent;
+        }
+        public string ToStringWithOriginAndNumber(Vector3 origin, int number)
+        {
+            FullContent = $"// model #{number}\n" + FullContent;
             ReplaceParameter("origin", origin.ToString());
             ReplaceParameter("angles", Vector3.Zero.ToString());
 
@@ -62,6 +50,7 @@ namespace SourceVmfZoo.Vmf
 
         private void ReplaceParameter(string parameterName, string parameterValue)
         {
+            parameterName = "\"" + parameterName + "\"";
             int parameterIndex = FullContent.IndexOf(parameterName, StringComparison.Ordinal);
 
             // +1 for space
